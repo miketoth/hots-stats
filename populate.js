@@ -15,12 +15,17 @@ request('http://www.gosugamers.net/replays?tournament=&team=&player=&recommended
     var downloadData = [];
     var objectInProgress = {};
     var stop = true;
+    var date;
     var rows = $('table tbody tr[data-href= ]').each(function(i, element) {
+
+      // fix the f-ing date
+      date = element.children[0].next.next.next.next.next.next.next.next.next.next.next.children[0].data.split('.');
+      date = Date.parse(date[0] + date[1]);
       downloadData.push({
         team1: element.children[0].next.children[0].data,
         team2: element.children[0].next.next.next.next.next.children[0].data,
         tournament: element.children[0].next.next.next.next.next.next.next.children[0].data,
-        date_added: element.children[0].next.next.next.next.next.next.next.next.next.next.next.children[0].data,
+        date_added: date, 
         download_link:'http://www.gosugamers.net' + element.children[0].next.next.next.next.next.next.next.next.next.next.next.next.next.children[1].attribs.href,
       });
     }); // get all rows of table
