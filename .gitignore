@@ -1,5 +1,4 @@
 *.*.swp
-.gitignore
 *.StormReplay
 node_modules/
 heroprotocol/

@@ -1,25 +1,4 @@
-var fs = require('fs');
 var PythonShell = require('python-shell');
-var request = require('request');
-var cheerio = require('cheerio');
-
-// * Performs request to get all downloads available on a page at gosugamers
-/*
-request('http://www.gosugamers.net/replays?tournament=&team=&player=&recommended=0&rotw=0&game=15&filter=Submit', function(error, response, body) {
-  if(!error && response.statusCode) {
-    $ = cheerio.load(body);
-    var a  = $('a');
-    var downloadIds = [];
-    for(i=0;i<a.length;i++) { 
-      if(a[i].attribs.href.indexOf('/replays/download?id=') !== -1) { 
-        downloadIds.push('http://www.gosugamers.net' + a[i].attribs.href);
-      }
-    };
-    console.log(downloadIds);
-  }
-});
-*/
-
 
 var options = {
   mode: 'text',
@@ -67,4 +46,3 @@ PythonShell.run('heroprotocol.py', options, function (err, result) {
   });
   console.log(game);
 });
-
