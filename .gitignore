@@ -2,3 +2,4 @@
 *.StormReplay
 node_modules/
 heroprotocol/
+output.json
