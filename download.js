@@ -1,27 +1,23 @@
-var fs = require('fs');
 var Promise = require('es6-promise').Promise;
-var request = require('request');
 var downloadList = require('./output');
 var promiseArray = [];
+var exec = require('child_process').exec;
 
-function promiseRequest(link) {
+function promiseRequest(id, link) {
   return new Promise(function(resolve, reject) {
-    request(link, function(err, response, body) {
-      if(err !== null) {
-        return reject(err);
+    var cmd = 'wget -O ' + id + '.StormReplay ' + link;
+    console.log(cmd);
+    exec(cmd, function(err, stdout, stderr) {
+      if(err!== null) { 
+        console.log('Error: ', err);
       }
-      return resolve(response, body);
     });
   });
 }
 
 downloadList.forEach(function(item) {
-  promiseArray.push(promiseRequest(item.download_link).then(function(res, body) {
-    res.pipe(fs.createWriteStream('/Volumes/MINT/storm_replays/' + item.id + '.StormReplay'));
-  }));
+  promiseArray.push(promiseRequest(item.id, item.download_link));
 });
 
-Promise.all(promiseArray).then(function() {
-  // all loaded nothing to do
-});
+Promise.all(promiseArray);
 
